@@ -3,7 +3,8 @@
 본 프로젝트의 목적은 컴퓨터 비전 기술을 이용하여 생산 라인에서 불량 제품을 자동으로 탐지하는 시스템을 개발하는 것입니다. 생산 과정에서 불량 제품을 신속하게 감지하고 분류하는 것은 생산 효율을 향상시키고 제품 품질을 보장하는데 매우 중요합니다.<br>
 생산 과정의 효율성을 높이고, 제품 품질을 향상시키며, 생산비용을 줄일 수 있습니다. 또한 이 시스템은 다양한 생산 라인에서 불량 제품 탐지에 활용될 수 있으며, 컴퓨터 비전 및 인공지능 기술의 산업 분야에서의 응용 가능성을 확대시킵니다.<br><br>
 
-## 이미지를 입력받아 불량 판단하는 API
+## Flow
+### 모델
 ```
 ImgAnomalyDetect_API
 ├──model
@@ -37,6 +38,13 @@ ImgAnomalyDetect_API
         - activation function : relu
         - activation function(output layers) : softmax
 4. 예측
+<br><br>
+
+### FAST API
+1. 애플리케이션 실행 : 터미널에서서 uvicorn main:app --reload 실행
+2. http://127.0.0.1:8000
+3. 이미지 업로드
+4. 모델 예측 결과 반환
 <br><br>
 
 ## Reference
