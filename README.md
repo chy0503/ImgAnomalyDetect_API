@@ -37,7 +37,9 @@ ImgAnomalyDetect_API
         - kernel size : 3,3
         - activation function : relu
         - activation function(output layers) : softmax
-4. 예측
+    - 평가
+        - accuracy : 0.7717
+        - f1 score : 0.5834
 <br><br>
 
 ### FAST API
@@ -45,6 +47,12 @@ ImgAnomalyDetect_API
 2. http://127.0.0.1:8000
 3. 이미지 업로드
 4. 모델 예측 결과 반환
+<br><br>
+
+## Execution Screen
+<img src="https://github.com/chy0503/ImgAnomalyDetect_API/assets/90389517/ff7cffa0-e29d-4e0e-9d97-bff34ad9536d">
+<img src="https://github.com/chy0503/ImgAnomalyDetect_API/assets/90389517/71d45e14-b028-47f7-9227-74cc3598fa35">
+<img src="https://github.com/chy0503/ImgAnomalyDetect_API/assets/90389517/c94941dd-6127-4f0b-9ffe-93a201f8f603">
 <br><br>
 
 ## Reference
