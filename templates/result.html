@@ -1,0 +1,11 @@
+<html>
+    <title>Anomaly Detect</title>
+    <body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+        <h1 style="text-align: center;">Anomaly Detect</h1>
+        <img src="{{ url_for('input', path=image_path) }}" alt="Predicted Image" width="400">
+        <p>
+            class: {{ class }}<br>
+            state: {{ anomaly }}
+        </p>
+    </body>
+</html>
