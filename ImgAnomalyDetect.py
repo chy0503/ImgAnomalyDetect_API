@@ -10,16 +10,11 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from tensorflow.keras.models import load_model
 from sklearn.model_selection import train_test_split
 import tensorflow_addons as tfa
+import matplotlib.pyplot as plt
 
 import os
 import cv2
 import glob
-
-def get_label_from_mapping(mapping, target_value):
-    for key, value in mapping.items():
-        if value == target_value:
-            return key
-    return None
 
 # 학습 데이터 로드 및 전처리
 root_folder = 'mvtec_anomaly_detection/'
@@ -85,11 +80,58 @@ model.compile(loss='categorical_crossentropy',
 # 모델 학습
 checkpointer = ModelCheckpoint(filepath='./model/ad.h5', monitor='val_loss', verbose=1, save_best_only=True)
 early_stopping_callback = EarlyStopping(monitor='val_loss', patience=20)
-history = model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, callbacks=[early_stopping_callback, checkpointer])
+history = model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=50, callbacks=[early_stopping_callback, checkpointer])
+
+### Loss(Train, Test) Graph
+y_vloss = history.history['val_loss']
+y_loss = history.history['loss']
+
+x_len = np.arange(len(y_loss))
+plt.plot(x_len, y_vloss, marker='.', c="red", label='Test_loss')
+plt.plot(x_len, y_loss, marker='.', c="blue", label='Train_loss')
+
+plt.legend(loc='upper right')
+plt.grid()
+plt.xlabel('epoch')
+plt.ylabel('loss')
+plt.show()
+
+
+### Accuracy(Train, Test) Graph
+y_vacc = history.history['val_accuracy']
+y_acc = history.history['accuracy']
+
+plt.plot(x_len, y_vacc, marker='.', c="red", label='Test_acc')
+plt.plot(x_len, y_acc, marker='.', c="blue", label='Train_acc')
+
+plt.grid()
+plt.xlabel('epoch')
+plt.ylabel('acc')
+plt.show()
+
+
+### F1-Score(Train, Test) Graph
+y_vaf = history.history['val_f1_score']
+y_f = history.history['f1_score']
+
+plt.plot(x_len, y_vaf, marker='.', c="red", label='Testset_acc')
+plt.plot(x_len, y_f, marker='.', c="blue", label='Trainset_acc')
+
+plt.grid()
+plt.xlabel('epoch')
+plt.ylabel('F1-Score')
+plt.show()
+
+def get_label_from_mapping(mapping, target_value):
+    for key, value in mapping.items():
+        if value == target_value:
+            return key
+    return None
 
 # 이미지 예측
-async def predict(img):
+def predict(img_path):
     model = load_model('./model/ad.h5')
+    img = Image.open(img_path)
     img = img.resize((128, 128))
     img = np.array(img)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
